@@ -14,16 +14,30 @@ function avisoStruct = subsetAVISO(filename, lonlatbox, timebox)
 %   output:
 %       - avisoStruct: the subsetted AVISO data.
 %
-%
-%
+% Function SUBSETAVISO looks in the directory filename (or possibly only
+% one file called filename) and subset the AVISO data for the longitude
+% latitude limits specified by lonlatbox (a 1x4 vector). It also subsets
+% in time if the input timebox is given.
+% 
+% The output structure always contains the fields "time", "lon" and
+% "lat". For the possible dependent variables, this function loads
+% from filename those variables whose names match those specified
+% by the "varbase" cell array (defined inside the SUBSETAVISO function).
 %
 % Olavo Badaro Marques, 25/Dec/2016.
+
+
+%% Variable names that, if present in *.nc
+% data files, will be obtained:
+
+varbase = {'adt', 'msla', 'sla', 'u', 'v'};
 
 
 %% Structure we assume for the file name:
 
 charbegin  = 'dt_global*';
 datesinds  = 25:32;
+% datesinds  = 26:33;
 dateformat = 'yyyymmdd';
 
 
@@ -81,25 +95,44 @@ indinlat = find(latvec >= lonlatbox(3) & latvec <= lonlatbox(4));
 
 % make sure this works!!! (remember weird lon limits)
 
+%% See what variables in varbase are found in the .nc files:
+
+infoaux = ncinfo(datafiles{1});
+ncallvars = {infoaux.Variables(:).Name};
+
+vars2load = intersect(ncallvars, varbase);
+
+
 %% Create structure output variable:
 
 avisoStruct.time = timefiles;
 avisoStruct.lon = lonvec(indinlon);
 avisoStruct.lat = latvec(indinlat);
-avisoStruct.adt = NaN(length(avisoStruct.lat), ...
-                      length(avisoStruct.lon), ...
-                      length(avisoStruct.time));
+
+for i = 1:length(vars2load)
+    
+    avisoStruct.(vars2load{i}) = NaN(length(avisoStruct.lat), ...
+                                     length(avisoStruct.lon), ...
+                                     length(avisoStruct.time));
+                      
+end
 
 
 %% Loop through datafiles and subset
 % each in longitude and latitude:
 
-for i = 1:length(datafiles)
+for i1 = 1:length(vars2load)
     
-    varaux = ncread(datafiles{i}, 'adt', ...
-                                  [indinlon(1), indinlat(2), 1], ...
-                                  [length(indinlon), length(indinlat), 1]);
-                              
-	avisoStruct.adt(:, :, i) = varaux';
+    for i2 = 1:length(datafiles)
+        
+        varaux = ncread(datafiles{i2}, vars2load{i1}, ...
+                                       [indinlon(1), indinlat(2), 1], ...
+                                       [length(indinlon), length(indinlat), 1]);
+
+        avisoStruct.(vars2load{i1})(:, :, i2) = varaux';
+    end
+    
 end
+
+
 
