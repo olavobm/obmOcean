@@ -24,6 +24,10 @@ function avisoStruct = subsetAVISO(filename, lonlatbox, timebox)
 % from filename those variables whose names match those specified
 % by the "varbase" cell array (defined inside the SUBSETAVISO function).
 %
+% The output dependent variables are 3-dimensional arrays, with the
+% number of rows equal to the number of latitudes, columns for longitudes
+% and time increasing in the third dimension.
+%
 % Olavo Badaro Marques, 25/Dec/2016.
 
 
