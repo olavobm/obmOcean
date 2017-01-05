@@ -1,5 +1,5 @@
 function avisoStruct = subsetAVISO(filename, lonlatbox, timebox)
-%% avisoStruct = SUBSETAVISO(filename, subdata)
+% avisoStruct = SUBSETAVISO(filename, subdata, timebox)
 %
 %   inputs:
 %       - filename: either one file name with the data
