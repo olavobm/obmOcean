@@ -40,8 +40,8 @@ varbase = {'adt', 'msla', 'sla', 'u', 'v'};
 %% Structure we assume for the file name:
 
 charbegin  = 'dt_global*';
-datesinds  = 25:32;
-% datesinds  = 26:33;
+datesinds  = 25:32;  % msla
+% datesinds  = 26:33;    % velocity
 dateformat = 'yyyymmdd';
 
 

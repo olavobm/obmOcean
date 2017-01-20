@@ -58,10 +58,10 @@ end
 
 %% Uses evalc so that things are not printed on the screen:
 
-strTimeCoords = 'time, lat, lon';
-strVar = tidevar;
-
-strRun = ['tidepred = tmd_tide_pred(''' tpxomodel ''', ' strTimeCoords ', ''' strVar ''');'];
-evalc(strRun);
+% strTimeCoords = 'time, lat, lon';
+% strVar = tidevar;
+%
+% strRun = ['tidepred = tmd_tide_pred(''' tpxomodel ''', ' strTimeCoords ', ''' strVar ''');'];
+% evalc(strRun);
 
 tidepred = tmd_tide_pred(tpxomodel, time, lat, lon, tidevar);
