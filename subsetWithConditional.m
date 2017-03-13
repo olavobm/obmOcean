@@ -1,15 +1,16 @@
-function [tout, xout] = subsetWithConditional(t, x, d, dlims, varfields, tavgstep)
-% [tout, xout] = subsetWithConditional(t, x, d, dlims, varfields, tavgstep)
+function [xout] = subsettimeseriesStruct(x, varfields, d, dlims, t, tavgstep)
+% [xout] = SUBSETTIMESERIESSTRUCT(x, varfields, d, dlims, t, tavgstep)
 %
 %   inputs:
-%       - dlims
-%       - t:
 %       - x:
 %       - varfields:
+%       - d:
+%       - dlims:
+%       - t:
 %       - tavgstep:
 %
+%
 %   outputs:
-%       - tout:
 %       - xout:
 %
 %
@@ -19,6 +20,15 @@ function [tout, xout] = subsetWithConditional(t, x, d, dlims, varfields, tavgste
 
 %%
 
+
+
+indcell = 
+
+indvarlims = dlims;
+
+varcell = 
+
+structout = subsetStruct(indvarcell, indvarlims, structvar, varcell);
 
 
 %%
@@ -46,11 +56,6 @@ MPnearbot.p = MPnearbot.p(lnearbot);
 MPnearbot.pitch = MPnearbot.pitch(lnearbot);
 MPnearbot.roll = MPnearbot.roll(lnearbot);
 
-%
-figure
-    plot(diff(MPnearbot.yday)*24*60)
-    xlabel('Minutes')
-    set(gca, 'FontSize', 14)
     
 % Take the time difference. When it goes to another profile,
 % there is a difference of 15 to 40 minutes:
