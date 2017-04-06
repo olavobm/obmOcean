@@ -1,15 +1,14 @@
-function [indprof, tpcell] = splitintoProfiles(dt, t, p, plims)
-% [indprof, tpcell] = SPLITINTOPROFILES(t, p, dt, plims)
+function [indprof] = splitintoProfiles(t, dt, p, plims)
+% [indprof] = SPLITINTOPROFILES(t, dt, p, plims)
 %
 %   inputs:
-%       - dt:
 %       - t:
+%       - dt:
 %       - p:
 %       - plims (optional):
 %
 %   outputs:
 %       - indprof:
-%       - tpcell:
 %
 %
 % Olavo Badaro Marques, 05/Apr/2017.
@@ -24,4 +23,23 @@ function [indprof, tpcell] = splitintoProfiles(dt, t, p, plims)
 
 
 %%
+
+tdiff = diff(t);
+
+
+ldiffprof = (tdiff >= dt);
+
+inddiffprof = find(ldiffprof);
+
+% nprof = 1 + length(inddiffprof);
+
+
+%%
+
+% indprof = cell(1, prof);
+
+indbeg = [1, inddiffprof+1];
+indend = [inddiffprof, length(t)];
+
+indprof = [indbeg; indend];
 
