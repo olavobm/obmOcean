@@ -1,22 +1,29 @@
 function wout  = wfromdpdt(t, p, ntunits, tskip)
-% [tout, w] = WFROMDPDT(t, p, tskip)
+% wout = WFROMDPDT(t, p, ntunits, tskip)
 %
 %   inputs:
-%       - t: time.
-%       - p: pressure.
+%       - t: time vector.
+%       - p: pressure (same length as t).
 %       - ntunits (optional): normalization to the units.
-%       - tskip (optional):
+%       - tskip (optional): time difference to disconsider the
+%                           calculation between two pressure values.
 %
 %   outputs:
 %       - tout: time for the vertical velocity output.
 %       - w: vertical velocity.
 %
+% Compute vertical velocity (w) from differentiating a
+% pressure time series. This can be an useful calculation
+% for profiling instuments in the ocean.
 %
+% The optional input ntunits can be used to return the output
+% in the units the user prefer. Input tskip is useful in the
+% case when the time series has gaps.
 %
 % Olavo Badaro Marques, 20/Mar/2017.
 
 
-%%
+%% If ntunits is not given, choose default value of 1:
 
 
 if ~exist('ntunits', 'var') || isempty(ntunits)
