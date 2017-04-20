@@ -1,44 +1,109 @@
-function N2 = buoyFreqsqrd(sgth, p, rho0)
-% N2 = BUOYFREQSQRD(sgth, p, rho0)
+function N2 = buoyFreqsqrd(z, sgth, zcut, ptscode, rho0, g)
+% N2 = BUOYFREQSQRD(z, sgth, zcut, ptscode, rho0, g)
 %
 %   inputs:
-%       -
-%       -
-%       -
+%       - z: pressure increasing downwards.
+%       - sgth: potential density (vector or matrix).
+%       - zcut (optional): 
+%       - ptscode (optional): integer greater or equal than 1. This code
+%                             indicates to whether to compute at the mid
+%                             points where input is given (default) or to
+%                             use a centered difference to compute in the
+%                             interior points where the input is given.
+%       - rho0 (optional): density reference.
+%       - g (optional): gravitational acceleration (default is Earth's g).
 %
 %   outputs:
-%       -
+%       - N2: structure with two fields -- (1) z, the location in the
+%             vertical and (2) N2, the buoyancy frequency squared (in
+%             radians/(s^2)).
 %
-% If you want to have the buoyancy frequency in [cyc/s] then
-% calculate sqrt(n2)./(2*pi).
+% Note that N2 is negative if density above is greater than below.
+%
+% To obtain frequency in cycles/s, calculate sqrt(N2)/(2*pi).
 %
 % Olavo Badaro Marques, 20/Apr/2017.
 
 
-%%
+%% Set constant values:
 
-g  = 9.80655;
+if ~exist('g', 'var')
+    g = 9.80655;
+end
 
 if ~exist('rho0', 'var')
     rho0 = 1025;
 end
 
 
-%%
+%% Set optional values:
 
-N2 = ;
-
-N2 = g/rho0 * N2;
-
-
-%%
-
-
-MMP.n2 = NaN(size(MMP.sgthlow));
-for i = 1:length(MMP.yday)
-    indok = find(~isnan(MMP.sgthlow(:, i)));
-    MMP.n2(indok, i) = centeredDeriv(MMP.z2(indok), MMP.sgthlow(indok, i));
+if ~exist('ptscode', 'var')
+    ptscode = 1;
+else
+    
+    ptscode_list = [1, 2];
+    
+    if ~any(ptscode_list == ptscode)
+        error(['Input ptscode doe not match any of the implemented ' ...
+               'integers (see variable ptscode_list).m'])
+    end
 end
 
-% Scale by g and rho_0 to make it N2:
-MMP.n2 = MMP.n2 .* (9.8/1025);
+if ~exist('zcut', 'var')
+    zcut = +Inf;
+end
+
+
+
+%% Compute the d(sgth)/dz using different discretizations
+% depending indicated by input ptscode:
+
+if ptscode==1
+    
+    N2.z = (z(1:end-1) + z(2:end))/2;
+    
+    N2.N2 = (sgth(2:end, :) - sgth(1:end-1, :)) ./ ...
+                  (z(2:end) - z(1:end-1));
+    
+elseif ptscode==2
+    
+    N2.z = z(2:end-1);
+    
+    N2.N2 = centeredDeriv(z, sgth);
+    % At some point, I should implement xcut inside centeredDeriv
+    
+    % Exclude the edges (where my function
+    % computes forward/backward differences:
+    N2.N2 = N2.N2(2:end-1, :);
+    
+end
+
+
+%% For finite input zcut, substitute N2 by NaN
+% where the input spacing is larger than zcut:
+
+if ~isinf(zcut)
+    
+    dz = z(2:end) - z(1:end-1);
+
+    if ptscode==1
+
+        lbigdz = (dz > zcut);
+       
+    elseif ptscode==2
+
+        lbigdz = (dz(1:end-1)>zcut || dz(1:end-2)>zcut);
+    end
+    
+    % Add NaN where the vertical difference is too big:
+    N2.N2(lbigdz, :) = NaN;
+    
+end
+
+
+%% Scale N2 by the constants:
+
+N2 = (g/rho0) * N2;
+
+
