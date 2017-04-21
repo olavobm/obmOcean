@@ -15,8 +15,8 @@ function N2 = buoyFreqsqrd(z, sgth, zcut, ptscode, rho0, g)
 %
 %   outputs:
 %       - N2: structure with two fields -- (1) z, the location in the
-%             vertical and (2) N2, the buoyancy frequency squared (in
-%             radians/(s^2)).
+%             vertical and (2) N2, the buoyancy frequency squared, in
+%             (radians/s)^2.
 %
 % Note that N2 is negative if density above is greater than below.
 %
@@ -64,7 +64,7 @@ if ptscode==1
     N2.z = (z(1:end-1) + z(2:end))/2;
     
     N2.N2 = (sgth(2:end, :) - sgth(1:end-1, :)) ./ ...
-                  (z(2:end) - z(1:end-1));
+             repmat(z(2:end) - z(1:end-1), 1, size(sgth, 2));
     
 elseif ptscode==2
     
@@ -104,6 +104,6 @@ end
 
 %% Scale N2 by the constants:
 
-N2 = (g/rho0) * N2;
+N2.N2 = (g/rho0) * N2.N2;
 
 
