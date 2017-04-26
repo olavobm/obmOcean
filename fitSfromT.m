@@ -1,23 +1,21 @@
-function [Smodel, S] = fitSfromT(t, s, T)
-% S = FITSFROMT(t, s, T)
+function [Smodel, S, m] = fitSfromT(t, s, T)
+% [Smodel, S, m] = FITSFROMT(t, s, T)
 %
 %   inputs:
-%       - t: potential temperature.
-%       - s:
-%       - T:
+%       - t: temperature.
+%       - s: salinity.
+%       - T (optional):
 %
 %   outputs:
-%       - S:
+%       - Smodel: anonymous function with the fit created by this function.
+%       - S: salinity estimated from the optional input T.
+%       - m: model parameters.
 %
-% FITSFROMT fits a third-order polynomial ...
+% FITSFROMT fits a third-order polynomial to
+% estimate salinity from temperature.
 %
-% s and t must have NaNs in the same locations. If t has more NaNs, the fit
-% will give an error.
-%
-% Ideally, we need salinity to compute potential temperature, which we want
-% to use to estimate salinity. Gladly the error associated with computing
-% potential temperature from 2000dbar relative to the surface is less than
-% 1%, for salinities between 30 and 35.
+% s and t must have NaNs in the same locations.
+% If t has more NaNs, the fit will give an error.
 %
 % Olavo Badaro Marques, 26/Nov/2016.
 
@@ -31,26 +29,19 @@ imf.power = 0:1:npowerfit;
 [~, m] = myleastsqrs(t, s, imf);
 
 
-%% If input T is row vector, make it a column vector:
+%% Created anonymous function for cubic estimation:
 
-if isrow(T)
-    T = T';
-end
+Smodel = @(T) m(1) + m(2)*T + m(3)*(T.^2) + m(4)*(T.^3);
 
 
-%% Fit Salinity from Temperature:
+%% End function or estimate salinity for a given input T:
 
-S = NaN(size(T));
-
-% Loop through columns:
-for i = 1:size(T, 2)
+if ~exist('T', 'var')
     
-    laux = ~isnan(T(:, i));
+    return    % end the function
     
-    naux = length(find(laux));
+else
     
-    S(laux, i) = [ones(naux, 1), T(laux, i), ...
-                  T(laux, i).^2, T(laux, i).^3] * m;
+    S = Smodel(T);
     
 end
-
