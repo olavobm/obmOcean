@@ -1,11 +1,13 @@
-function tidepred = tidepredictTPXO(time, lon, lat, tidevar, tpxomodel)
-% tidepred = TIDEPREDICTTPXO(time, lon, lat, tidevar, tpxomodel)
+function tidepred = tidepredictTPXO(time, lon, lat, tidevar, tideconst, tpxomodel)
+% tidepred = TIDEPREDICTTPXO(time, lon, lat, tidevar, tideconst, tpxomodel)
 %
 %   inputs:
-%       - time: time in datenum format to (UTC????)
+%       - time: time in datenum format(UTC????)
 %       - lon: longitude.
 %       - lat: latitude.
 %       - tidevar:
+%       - tideconst (optional): cell array (or one string) with the name
+%                               of the tidal constituents.
 %       - tpxomodel (optional):
 %
 %   outputs:
@@ -35,6 +37,7 @@ if exist(tpxomodel, 'file') ~=2
     error(['TPXO*.* file ' tpxomodel ' does not exist'])
 end
 
+
 %%
 
 if ~exist('tidevar', 'var')
@@ -43,6 +46,28 @@ if ~exist('tidevar', 'var')
     tidevar = 'z';
 
 end
+
+
+%% Tidal constituents:
+
+% These seem to be the default constituents that TPXO computes:
+tidalconstNames = {'M2', 'S2', 'N2', 'K2', 'K1', 'O1', 'P1', 'Q1', ...
+                   'MF', 'MM', 'M4', 'MS4', 'MN4'};
+tidalconstIndices = 1:13;
+
+mapConst = containers.Map(tidalconstNames, tidalconstIndices);
+
+% Get indices of tidal constituents to estimate:
+if ~exist('tideconst', 'var')
+    
+    tideInds = tidalconstIndices;
+    
+else
+    
+    tideInds = mapConst(upper(tideconst));
+    
+end
+
 
 %%
 time = time(:);
@@ -64,4 +89,4 @@ end
 % strRun = ['tidepred = tmd_tide_pred(''' tpxomodel ''', ' strTimeCoords ', ''' strVar ''');'];
 % evalc(strRun);
 
-tidepred = tmd_tide_pred(tpxomodel, time, lat, lon, tidevar);
+tidepred = tmd_tide_pred(tpxomodel, time, lat, lon, tidevar, tideInds);
