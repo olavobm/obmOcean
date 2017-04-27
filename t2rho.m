@@ -42,5 +42,5 @@ rho0 = gsw_rho(S0, T0, p0);
 
 %% Compute the correspondent temperature anomaly:
 
-rhoa = rho0 * Talpha * ta;
+rhoa = - rho0 * Talpha * ta;
 
