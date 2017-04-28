@@ -42,9 +42,12 @@ end
 
 if ~exist('tidevar', 'var')
     
-%     tidevar = {'u', 'v', 'z'};
-    tidevar = 'z';
-
+    tidevar = {'u', 'v', 'z'};
+    
+else
+    if ~iscell(tidevar)
+        tidevar = {tidevar};
+    end
 end
 
 
@@ -81,6 +84,18 @@ if isrow(lat)
 end
 
 
+%%
+
+varFiels = [{'time', 'lon', 'lat'}, tidevar];
+
+tidepred = createEmptyStruct(varFiels);
+
+%
+tidepred.time = time;
+tidepred.lon = lon;
+tidepred.lat = lat;
+
+
 %% Uses evalc so that things are not printed on the screen:
 
 % strTimeCoords = 'time, lat, lon';
@@ -89,4 +104,8 @@ end
 % strRun = ['tidepred = tmd_tide_pred(''' tpxomodel ''', ' strTimeCoords ', ''' strVar ''');'];
 % evalc(strRun);
 
-tidepred = tmd_tide_pred(tpxomodel, time, lat, lon, tidevar, tideInds);
+for i = 1:length(tidevar)
+    tidepred.(tidevar{i}) = tmd_tide_pred(tpxomodel, time, lat, lon, tidevar{i}, tideInds);
+end
+
+
