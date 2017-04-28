@@ -19,7 +19,7 @@ function rhoa = t2rho(ta, T0, p0, S0)
 % (T0, S0, p0). A default value is chosen for S0, so it does not
 % necessarily need to be given as an input.
 %
-% The coefficient and an associated reference pressure is
+% The coefficient and an associated reference density is
 % computed using functions from the Gibbs-SeaWater (GSW)
 % toolbox (http://www.teos-10.org).
 %
