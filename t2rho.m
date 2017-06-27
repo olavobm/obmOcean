@@ -1,5 +1,5 @@
-function rhoa = t2rho(ta, T0, p0, S0)
-% rhoa = T2RHO(ta, T0, p0, S0)
+function rhoa = ta2rhoa(ta, T0, p0, S0)
+% rhoa = TA2RHOA(ta, T0, p0, S0)
 %
 %   inputs:
 %       - ta: temperature anomaly.
@@ -40,7 +40,7 @@ Talpha = gsw_alpha(S0, T0, p0);
 rho0 = gsw_rho(S0, T0, p0);
 
 
-%% Compute the correspondent temperature anomaly:
+%% Compute the correspondent density anomaly:
 
 rhoa = - rho0 * Talpha * ta;
 
