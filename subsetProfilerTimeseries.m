@@ -2,18 +2,21 @@ function [xout] = subsetProfilerTimeseries(x, varfields, d, dlims, t, tavgstep)
 % [xout] = SUBSETPROFILERTIMESERIES(x, varfields, d, dlims, t, tavgstep)
 %
 %   inputs:
-%       - x:
-%       - varfields:
-%       - d:
-%       - dlims:
+%       - x: structure variable.
+%       - varfields: (dependent) variables you want to subset.
+%       - d: cell array (or a string) with independent variables to subset.
+%       - dlims: Nx2 array where each row has the min/max to subset along
+%                the dimension correspondent to d.
 %       - t:
 %       - tavgstep:
 %
-%
 %   outputs:
-%       - xout:
+%       - xout: structure where the appropriate dependent variables have
+%               been subsetted and average within the timeframe tavgstep.
 %
 %
+%
+% See also: subsetStruct.m
 %
 % Olavo Badaro Marques, 13/Mar/2017.
 
