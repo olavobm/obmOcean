@@ -20,7 +20,7 @@ function [displat, displon] = km2latlon(L, lat0)
 %% Kilometers in 1 degree of latitude and longitude
 
 lat1degree = 111.19493;
-lon1degree = lat1degree .* cos(lat0);
+lon1degree = lat1degree .* cosd(lat0);
 
 
 %% Convert kilometers to degrees
