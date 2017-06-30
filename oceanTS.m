@@ -1,6 +1,8 @@
 classdef oceanTS
-    % Class OCEANTS
+    % Class OCEANTS to deal with temperature/salinity data in the ocean.
     %
+    % TO DO: Replace the data matrix by a table and use the
+    %        relevant operations.
     %
     % Olavo Badaro Marques, 30/Jun/2017.
     
