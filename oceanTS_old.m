@@ -1,5 +1,5 @@
-classdef oceanTS
-    % Class OCEANTS to deal with temperature/salinity data in the ocean.
+classdef oceanTS_old
+    % Class OCEANTS_OLD to deal with temperature/salinity data in the ocean.
     %
     % TO DO: Replace the data matrix by a table and use the
     %        relevant operations.
@@ -23,14 +23,18 @@ classdef oceanTS
     methods
 
         %%
-        function obj = oceanTS(p, t, s, time, lon, lat)
-        
+        function obj = oceanTS_old(p, t, s, time, lon, lat)
+            
+            %
+            obj.operlims = [-Inf(1,6); Inf(1,6)];
+            
             %
             if nargin==0
-                ocean.data = NaN(0, 6);
+                obj.data = NaN(0, 6);
+                return
             end
 
-            % Turn data into column vectors:
+            % Turn data into column vectors
             p = p(:);
             t = t(:);
             s = s(:);
@@ -50,24 +54,29 @@ classdef oceanTS
                 error('')
             end
             
-            % -------------------------------------------------------------
-            % ---------------- DISREGARD NANs!!!!!!! ----------------
-            % -------------------------------------------------------------
+            % Remove any entry with NaN
+            lpNaN = isnan(p);
+            ltNaN = isnan(t);
+            lsNaN = isnan(s);
+            ltimeNaN = isnan(time);
+            llonNaN = isnan(lon);
+            llatNaN = isnan(lat);
+            
+            lgood = ~lpNaN & ~ltNaN & ~lsNaN & ~ltimeNaN & ~llonNaN & ~llatNaN;
             
             %
-            obj.data = [p, t, s, time, lon, lat];
-            
-            %
-            obj.operlims = [-Inf(1,6); Inf(1,6)];
+            obj.data = [p(lgood), t(lgood), s(lgood), ...
+                        time(lgood), lon(lgood), lat(lgood)];
             
         end
         
         
         %%
         function obj = add(obj, p, t, s, time, lon, lat)
-            obj.data = [obj.data; oceanTS(p, t, s, time, lon, lat).data];
+            obj.data = [obj.data; oceanTS_old(p, t, s, time, lon, lat).data];
         end
 
+        
         %%
         function varcolind = indcol(~, varstr)
             colcode.pressure = 1;
@@ -124,44 +133,42 @@ classdef oceanTS
         end
         
         
-        %%
+        %% Extract one column, satisfying all the limits in operlims:
         function datavar = extract(obj, varstr)
-            
-            
-            datavar = obj.data(:, );
+            datavar = obj.data(obj.inlims, obj.indcol(varstr));
         end
         
+        
         %%
-        function datavar = pressure(obj); datavar = obj.data(:, 1); end
-        function datavar = temperature(obj); datavar = obj.data(:, 2); end
-        function datavar = salinity(obj); datavar = obj.data(:, 3); end
-        function datavar = time(obj); datavar = obj.data(:, 4); end
-        function datavar = longitude(obj); datavar = obj.data(:, 5); end
-        function datavar = latitude(obj); datavar = obj.data(:, 6); end
+        function datavar = pressure(obj); datavar = obj.extract('pressure'); end
+        function datavar = temperature(obj); datavar = obj.extract('temperature'); end
+        function datavar = salinity(obj); datavar = obj.extract('salinity'); end
+        function datavar = time(obj); datavar = obj.extract('time'); end
+        function datavar = longitude(obj); datavar = obj.extract('longitude'); end
+        function datavar = latitude(obj); datavar = obj.extract('latitude'); end
     
-        
 
-
-        
         %% ----------------------------------------------------------------
         % -----------------------------------------------------------------
         % -----------------------------------------------------------------
         
         %%
-%         function obj = squarelim(obj, xy0, xydist)
-%             
-%             %
-%             
-%             
-%             %
-%             lonlims = [xy0(1)-xydist, xy0(1)+xydist];
-%             latlims = [xy0(2)-xydist, xy0(2)+xydist];
-%             
-%             %
-%             obj = setlims(lonlims, 'longitude');
-%             obj = setlims(lonlims, 'latitude');
-%             
-%         end
+        function obj = squarelims(obj, xy0, kmdist)
+            %
+            % This will give problems in the longitude branch cut.
+            
+            %
+            [distlat, distlon] = km2latlon(kmdist, xy0(2));
+            
+            %
+            lonlims = [xy0(1) - distlon, xy0(1) + distlon];
+            latlims = [xy0(2) - distlat, xy0(2) + distlat];
+            
+            %
+            obj = obj.setlims(lonlims, 'longitude');
+            obj = obj.setlims(latlims, 'latitude');
+            
+        end
         
 
         %%
