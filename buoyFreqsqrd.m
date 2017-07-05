@@ -20,7 +20,7 @@ function N2 = buoyFreqsqrd(z, sgth, zcut, ptscode, rho0, g)
 %
 % Note that N2 is negative if density above is greater than below.
 %
-% To obtain frequency in cycles/s, calculate sqrt(N2)/(2*pi).
+% To obtain frequency in cycles/s, do sqrt(N2)/(2*pi).
 %
 % Olavo Badaro Marques, 20/Apr/2017.
 
@@ -28,11 +28,12 @@ function N2 = buoyFreqsqrd(z, sgth, zcut, ptscode, rho0, g)
 %% Set constant values:
 
 if ~exist('g', 'var')
-    g = 9.80655;
+    g = 9.7963;
 end
 
 if ~exist('rho0', 'var')
-    rho0 = 1025;
+%     rho0 = 1025;
+    rho0 = nanmean(sgth(:));
 end
 
 
@@ -45,7 +46,7 @@ else
     ptscode_list = [1, 2];
     
     if ~any(ptscode_list == ptscode)
-        error(['Input ptscode doe not match any of the implemented ' ...
+        error(['Input ptscode does not match any of the implemented ' ...
                'integers (see variable ptscode_list).m'])
     end
 end
