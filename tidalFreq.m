@@ -1,8 +1,8 @@
-function wavefreq = tidalFreq(wavename)
-% wavefreq = TIDALFREQ(wavename)
+function wavefreq = tidalFreq(wavecode)
+% wavefreq = TIDALFREQ(wavecode)
 %
 %   inputs:
-%       - wavename:
+%       - wavecode:
 %
 %   outputs:
 %       - wavefreq:
@@ -12,11 +12,11 @@ function wavefreq = tidalFreq(wavename)
 
 
 %%
-if ~iscell(wavename)
-    wavename = {wavename};
+if ~iscell(wavecode)
+    wavecode = {wavecode};
 end
 
-nWaves = length(wavenames);
+nWaves = length(wavecode);
 
 
 %% Database of tidal frequencies
@@ -45,5 +45,5 @@ end
 wavefreq = NaN(1, nWaves);
 
 for i = 1:nWaves
-    wavefreq(i) = tidesDataBase.(wavename{i}).freq;
+    wavefreq(i) = tidesDataBase.(wavecode{i}).freq;
 end
