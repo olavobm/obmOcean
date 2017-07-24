@@ -2,16 +2,22 @@ function wavefreq = tidalFreq(wavecode)
 % wavefreq = TIDALFREQ(wavecode)
 %
 %   inputs:
-%       - wavecode:
+%       - wavecode: string (or cell array) with tidal
+%                   constituent(s) name(s).
 %
 %   outputs:
-%       - wavefreq:
+%       - wavefreq: frequency (in cycles per day) of the
+%                   tidal constituents requested in the input.
 %
+% TIDALFREQ returns tidal frequencies (in cycles per day). The 
+% function itself contains the definition (i.e. database) of
+% the frequency of each constituent.
 %
 % Olavo Badaro Marques, 21/Jul/2017.
 
 
-%%
+%% Make sure input is a cell array
+
 if ~iscell(wavecode)
     wavecode = {wavecode};
 end
@@ -27,7 +33,8 @@ tidesDataBase.K1.period = 24;
 % tidesDataBase.S2.period = ;
 % tidesDataBase.O1.period = ;
 
-% Get the names of the tidal constituents in the database
+
+%% Get the names of the tidal constituents in the database
 tidalConst = fieldnames(tidesDataBase);
 nConst = length(tidalConst);
 
