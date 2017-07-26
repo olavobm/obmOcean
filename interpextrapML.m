@@ -1,30 +1,28 @@
-function n2new = interpextrapML(z, n2, D, sml, bml, zgrid)
-% n2new = EXTRAPN2(z, n2, D, sml, bml, zgrid)
+function xinterp = interpextrapML(z, x, D, sml, bml, zgrid)
+% xinterp = INTERPEXTRAPML(z, x, D, sml, bml, zgrid)
 %
 %   inputs:
-%       - z:
-%       - n2:
+%       - z: depth points where x is given.
+%       - x: variable to interpolate/extrapolate.
 %       - D: bottom depth.
 %       - sml: 1x2 array with surface mixed layer depth and value.
 %       - bml: 1x2   "     "   bottom   "     "     "    "    "
-%       - zgrid (optional): interpolate onto new grid.
+%       - zgrid: grid to interpolate x onto.
 %
 %   outputs:
-%       -
+%       - xinterp: x interpolated onto zgrid
 %       -
 %
-% WOULD BE REALLY NICE, IF z COULD MATRIX (N2 NOT REGULAR).
+% Note that sml(1) and bml(1) are the depths of the bottom and upper
+% limits, respectively, of these mixed layers.
+%
+% MAYBE TO DO:
+%   - would be really nice, if z could matrix (n2 not regular).
 %
 % Olavo Badaro Marques, 27/Nov/2016.
 
-
-ncols = size(n2, 2);
-
 %%
-
-if ~exist('zgrid', 'var')
-    zgrid = z;
-end
+ncols = size(x, 2);
 
 
 %%
@@ -39,36 +37,36 @@ end
 % Dealing with surface gap:
 if sml(1)>0
     zsgap = repmat([0; sml(1)], 1, 1);
-    n2sgap = repmat(sml(2), 2, 1);
+    xsgap = repmat(sml(2), 2, 1);
 else % sml(1)==0
     zsgap = zeros(1, 1);
-    n2sgap = repmat(sml(2), 1, ncols);
+    xsgap = repmat(sml(2), 1, ncols);
 end
 
 
 % Dealing with bottom gap:
 if bml(1)<D
     zbgap = repmat([bml(1); D], 1, 1);
-    n2bgap = repmat(bml(2), 2, ncols);
+    xbgap = repmat(bml(2), 2, ncols);
 else % bml(1)==D
     zbgap = repmat(D, 1, 1);
-    n2bgap = repmat(bml(2), 1, ncols);
+    xbgap = repmat(bml(2), 1, ncols);
 end
 
 % Concatenate to the data:
 zaux  = [zsgap; z; zbgap];
-n2aux = [n2sgap; n2; n2bgap];
+xaux = [xsgap; x; xbgap];
 
 
 %% Loop through columns and interpolate:
 
-n2new = NaN(length(zgrid), ncols);
+xinterp = NaN(length(zgrid), ncols);
 
 for i = 1:ncols
     
-    lok = ~isnan(n2aux(:, i));
+    lok = ~isnan(xaux(:, i));
     
-	n2new(:, i) = interp1(zaux(lok), n2aux(lok, i), zgrid);
+	xinterp(:, i) = interp1(zaux(lok), xaux(lok, i), zgrid);
     
 end
 
