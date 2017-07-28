@@ -32,8 +32,7 @@ if ~exist('g', 'var')
 end
 
 if ~exist('rho0', 'var')
-%     rho0 = 1025;
-    rho0 = nanmean(sgth(:));
+    rho0 = 1025;
 end
 
 
