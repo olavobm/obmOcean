@@ -1,5 +1,5 @@
 function ctdtab = ctd2table(id, P, T, S, time, lon, lat)
-%
+% ctdtab = CTD2TABLE(id, P, T, S, time, lon, lat)
 %
 %   inputs
 %       - id:
@@ -41,6 +41,7 @@ llat1 = (length(lat)==1);
 if llon1 && llat1
     lon = repmat(lon, N, 1);
     lat = repmat(lat, N, 1);
+elseif ~llon1 && ~llat1
 else
     error('Number of longitudes is different than latitudes.')
 end
