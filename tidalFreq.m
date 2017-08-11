@@ -10,8 +10,9 @@ function wavefreq = tidalFreq(wavecode)
 %                   tidal constituents requested in the input.
 %
 % TIDALFREQ returns tidal frequencies (in cycles per day). The 
-% function itself contains the definition (i.e. database) of
-% the frequency of each constituent.
+% function itself contains the definition of the frequency of
+% each constituent (a database obtained from the toolbox t_tide,
+% by Rich Pawlowicz).
 %
 % Olavo Badaro Marques, 21/Jul/2017.
 
@@ -28,10 +29,10 @@ nWaves = length(wavecode);
 %% Database of tidal frequencies
 
 % Periods (in hours)
-tidesDataBase.M2.period = 12.42;
-tidesDataBase.K1.period = 24;
-% tidesDataBase.S2.period = ;
-% tidesDataBase.O1.period = ;
+tidesDataBase.M2.period = 12.4206;
+tidesDataBase.K1.period = 23.9345;
+tidesDataBase.S2.period = 12.0000;
+tidesDataBase.O1.period = 25.8193;
 
 
 %% Get the names of the tidal constituents in the database
