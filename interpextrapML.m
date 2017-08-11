@@ -28,7 +28,7 @@ ncols = size(x, 2);
 %%
 
 if (sml(1) > z(1)) || (bml(1) < z(end))
-    error('Not allowed.')
+    error('Not allowed because.. should be though.')
 end
 
 
