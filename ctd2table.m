@@ -2,18 +2,30 @@ function ctdtab = ctd2table(id, P, T, S, time, lon, lat)
 % ctdtab = CTD2TABLE(id, P, T, S, time, lon, lat)
 %
 %   inputs
-%       - id:
-%       - p:
-%       - t:
-%       - s:
-%       - time:
-%       - lon:
-%       - lat:
+%       - id: string with the identification of the data.
+%       - p: pressure (in dbar).
+%       - t: temperature 
+%       - s: salinity
+%       - time: 
+%       - lon: longitude
+%       - lat: latitude
 %
 %   outputs
-%       - ctdtab:
+%       - ctdtab: a Matlab table with all the data.
 %
+% CTD2TABLE creates a variable of class table from CTD data. Note this
+% format is a more natural way to subset the data in any of the variables
+% or manipulate the dataset as a whole.
+% 
+% Input id must be one string that identifies all the data in the other
+% inputs. These should be double arrays (vectors or matrices). Except for
+% lon and lat, the data arrays must have the same size.
 %
+% Lon and lat may also be one value (for each), in which case they are
+% copied for all the other data points.
+%
+% MAYBE TO DO:
+%       - include varargin for other variables (such as O2).
 %
 % Olavo Badaro Marques, 27/Jul/2017.
 
