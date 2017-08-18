@@ -30,8 +30,8 @@ nWaves = length(wavecode);
 
 % Periods (in hours)
 tidesDataBase.M2.period = 12.4206;
-tidesDataBase.K1.period = 23.9345;
 tidesDataBase.S2.period = 12.0000;
+tidesDataBase.K1.period = 23.9345;
 tidesDataBase.O1.period = 25.8193;
 
 
