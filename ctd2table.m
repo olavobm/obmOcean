@@ -30,7 +30,7 @@ function ctdtab = ctd2table(id, P, T, S, time, lon, lat)
 % Olavo Badaro Marques, 27/Jul/2017.
 
 
-%%
+%% Turn all variables into column vectors and get length of them
 
 %
 P = P(:);
@@ -45,7 +45,7 @@ lat = lat(:);
 N = length(P);
 
 
-%%
+%% Get length of lon/lat and adjust size appropriately
 
 %
 llon1 = (length(lon)==1);
@@ -59,7 +59,7 @@ else
 end
 
 
-%%
+%% Transform ID into cell array and create table
 
 %
 ID = cell(N, 1);
