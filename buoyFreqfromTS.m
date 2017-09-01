@@ -1,11 +1,12 @@
 function N2 = buoyFreqfromTS(lat, p, t, s, p0, zcut, ptscode)
-% N2 = BUOYFREQFROMTS(p, t, s, zcut, ptscode)
+% N2 = BUOYFREQFROMTS(lat, p, t, s, p0, zcut, ptscode)
 %
 %   inputs:
 %       - lat: latitude (required to compute depth from pressure).
 %       - p: pressure (in dbar).
 %       - t: in-situ temperature.
 %       - s: salinity.
+%       - p0 (optional):
 %       - zcut (optional):
 %       - ptscode (optional):
 %
@@ -19,10 +20,13 @@ function N2 = buoyFreqfromTS(lat, p, t, s, p0, zcut, ptscode)
 % potential density (using the Gibbs-SeaWater (GSW) Oceanographic
 % Toolbox), then N2 is computed.
 %
+% See also: buoyFreqsqrd.m
+%
 % Olavo Badaro Marques, 20/Apr/2017.
 
 
-%%
+%% Use constant salinity if no salinity is
+% given as input or if it is only a number
 
 S0 = 35;
 
@@ -30,7 +34,7 @@ if ~exist('s', 'var') || isempty(s)
     s = S0;
 end
 
-%
+% If input salinity is a number, use that as a constant value
 if numel(s)==1
     s = s .* ones(size(t));
 end
