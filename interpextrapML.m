@@ -1,7 +1,7 @@
 function xinterp = interpextrapML(z, x, D, sml, bml, zgrid)
 % xinterp = INTERPEXTRAPML(z, x, D, sml, bml, zgrid)
 %
-%   inputs:
+%   inputs
 %       - z: depth points where x is given.
 %       - x: variable to interpolate/extrapolate.
 %       - D: bottom depth.
@@ -9,9 +9,11 @@ function xinterp = interpextrapML(z, x, D, sml, bml, zgrid)
 %       - bml: 1x2   "     "   bottom   "     "     "    "    "
 %       - zgrid: grid to interpolate x onto.
 %
-%   outputs:
-%       - xinterp: x interpolated onto zgrid
-%       -
+%   outputs
+%       - xinterp: x interpolated onto zgrid. Extrapolation obeys the
+%                  specification of mixed layers.
+%
+%
 %
 % Note that sml(1) and bml(1) are the depths of the bottom and upper
 % limits, respectively, of these mixed layers.
@@ -21,11 +23,13 @@ function xinterp = interpextrapML(z, x, D, sml, bml, zgrid)
 %
 % Olavo Badaro Marques, 27/Nov/2016.
 
-%%
+
+%% Code operates independently for each column of x
+
 ncols = size(x, 2);
 
 
-%%
+%% Check input parameters
 
 if (sml(1) > z(1)) || (bml(1) < z(end))
     error('Not allowed because.. should be though.')
