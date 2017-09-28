@@ -33,13 +33,21 @@ function ctdtab = ctd2table(id, P, T, S, time, lon, lat)
 %% Turn all variables into column vectors and get length of them
 
 %
-P = P(:);
+Ncols = size(T, 2);
+
+%
 T = T(:);
 S = S(:);
 
 time = time(:);
 lon = lon(:);
 lat = lat(:);
+
+%
+if (numel(P)~=numel(T))
+    P = repmat(P, 1, Ncols);
+end
+P = P(:);
 
 %
 N = length(P);
