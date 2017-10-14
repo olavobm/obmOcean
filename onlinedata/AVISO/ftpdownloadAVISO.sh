@@ -8,8 +8,9 @@
 #   - finldate: final date.
 #
 # Download AVISO data from ftp.sltac.cls.fr/ -- the repository
-# managed by Copernicus. For accounts older than Jun/2016, you
-# can also download from ftp.aviso.altimetry.fr/.
+# managed by Copernicus (http://marine.copernicus.eu). For
+# accounts older than Jun/2016, you can also download from
+# ftp.aviso.altimetry.fr/.
 #
 # Olavo Badaro Marques, 22/Dec/2016.
 
