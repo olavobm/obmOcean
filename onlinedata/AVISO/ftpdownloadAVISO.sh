@@ -23,7 +23,7 @@ USERPW=""
 #################################################
 # Specify directory to save files
 
-outputdir=/Users/olavobm/Documents/MATLAB/olavo_research/datasets/aviso/phy_l4/
+outputdir=/mypc/folder/data/
 
 cd $outputdir
 
