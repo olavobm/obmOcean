@@ -7,9 +7,9 @@
 #   - initdate: initial date.
 #   - finldate: final date.
 #
-# Download AVISO data from ftp.aviso.altimetry.fr/ -- if you
-# have an account newer than Jun/2016, you have to download
-# data from the repository managed by Copernicus.
+# Download AVISO data from ftp.sltac.cls.fr/ -- the repository
+# managed by Copernicus. For accounts older than Jun/2016, you
+# can also download from ftp.aviso.altimetry.fr/.
 #
 # Olavo Badaro Marques, 22/Dec/2016.
 
@@ -17,13 +17,12 @@
 # User id and password information
 
 USERID=""
-
 USERPW=""
-
 
 #################################################
 # Specify directory to save files
-outputdir=pwd
+
+outputdir=/Users/olavobm/Documents/MATLAB/olavo_research/datasets/aviso/phy_l4/
 
 cd $outputdir
 
@@ -32,8 +31,8 @@ printf "\n Saving data at directory $outputdir \n \n"
 #################################################
 # Initial and final date to get data
 
-initdate=20160420   # yyyymmdd
-finldate=20160421   # yyyymmdd
+initdate=20150116   # yyyymmdd
+finldate=20150331   # yyyymmdd
 
 # Subset the first 4 digits of the variables above
 # and create sequence of all the years in between
@@ -46,8 +45,8 @@ allyears=$(seq ${initdate:0:4} ${finldate:0:4})
 #################################################
 # Remote FTP and data directory in it
 
-remoteFTP="ftp.aviso.altimetry.fr/"
-
+#remoteFTP="ftp.aviso.altimetry.fr/"
+remoteFTP="ftp.sltac.cls.fr/"
 
 #################################################
 # Filename structure (I could use this, but it is
@@ -56,19 +55,31 @@ remoteFTP="ftp.aviso.altimetry.fr/"
 # when the file was updated)
 
 #dt_global_allsat_madt_h_20150101_20150914.nc.gz
-
+#nrt_global_allsat_msla_h_20161220_20161226.nc.gz
 
 #################################################
 # Go to the appropriate directory:
 
-datadir="global/delayed-time/grids/madt/all-sat-merged/h/"
+#datadir="global/delayed-time/grids/msla/all-sat-merged/h/“
+#datadir="global/near-real-time/grids/msla/all-sat-merged/uv/“
+
+# Delayed-time (reprocessed/multiple variables) from Copernicus:
+datadir="Core/SEALEVEL_GLO_PHY_L4_REP_OBSERVATIONS_008_047/dataset-duacs-rep-global-merged-allsat-phy-l4-v3/"
+
+# Delayed-time from Copernicus:
+#datadir="Core/SEALEVEL_GLO_SLA_MAP_L4_REP_OBSERVATIONS_008_027/dataset-duacs-rep-global-merged-allsat-msla-l4/"
+
+# Near-real time from Copernicus:
+#datadir="Core/SEALEVEL_GLO_SLA_MAP_L4_NRT_OBSERVATIONS_008_026/dataset-duacs-nrt-global-merged-allsat-msla-l4/"
+# does not work with near-real-time because data is not divided
+# in different folders for different years.
 
 
 #################################################
 # Log in through FTP:
 
 strFTP="ftp://$USERID:$USERPW@$remoteFTP"
-
+echo "$strFTP"
 #ftp $strFTP
 
 #################################################
