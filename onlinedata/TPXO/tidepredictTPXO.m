@@ -13,8 +13,10 @@ function tidepred = tidepredictTPXO(time, lon, lat, tidevar, tideconst, tpxomode
 %   outputs:
 %       - tidepred:
 %
-% TIDEPREDICTTPXO uses the tmd_toolbox to make a tidal prediction
-% using the TPXO model.
+% TIDEPREDICTTPXO uses the tmd_toolbox (the tmd_tide_pred.m function)
+% to make a tidal prediction using the TPXO model.
+%
+% See also: tmd_tide_pred.m
 %
 % Olavo Badaro Marques, 12/Jan/2017.
 
@@ -67,9 +69,19 @@ if ~exist('tideconst', 'var')
     
 else
     
-    tideInds = mapConst(upper(tideconst));
+    if ~iscell(tideconst)
+        tideconst = {tideconst};
+    end
+    
+    tideInds = NaN(1, length(tideconst));
+    
+    for i = 1:length(tideconst)
+        tideInds(i) = mapConst(upper(tideconst{i}));
+    end
     
 end
+
+% % Nconst = length(tideconst);
 
 
 %%
@@ -104,8 +116,16 @@ tidepred.lat = lat;
 % strRun = ['tidepred = tmd_tide_pred(''' tpxomodel ''', ' strTimeCoords ', ''' strVar ''');'];
 % evalc(strRun);
 
+
+
 for i = 1:length(tidevar)
+    
     tidepred.(tidevar{i}) = tmd_tide_pred(tpxomodel, time, lat, lon, tidevar{i}, tideInds);
+    
 end
 
+% % [tidepred.umaj, tidepred.umin, ...
+% %  tidepred.upha, tidepred.uincl] = tmd_ellipse(tpxomodel, lat, lon, 'M2');
+
+% % % [a, b] = tmd_extract_HC(tpxomodel, lat, lon, 'u', tideInds);
 
