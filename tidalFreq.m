@@ -1,9 +1,11 @@
-function wavefreq = tidalFreq(wavecode)
-% wavefreq = TIDALFREQ(wavecode)
+function wavefreq = tidalFreq(wavecode, unitstr)
+% wavefreq = TIDALFREQ(wavecode, unitstr)
 %
 %   inputs:
 %       - wavecode: string (or cell array) with tidal
 %                   constituent(s) name(s).
+%       - unitstr (optional): string indicating units of the output
+%                             (default is cycles per day).
 %
 %   outputs:
 %       - wavefreq: frequency (in cycles per day) of the
@@ -15,6 +17,23 @@ function wavefreq = tidalFreq(wavecode)
 % by Rich Pawlowicz).
 %
 % Olavo Badaro Marques, 21/Jul/2017.
+
+
+%%
+
+%
+unitsFactors = containers.Map();
+unitsFactors('cpd') = 1;
+unitsFactors('rps') = 2*pi / (24*3600);
+
+%
+if ~exist('unitstr', 'var')
+	unitstr = 'cpd';
+else
+    if ~unitsFactors.isKey(unitstr)
+        error('"%s" is not a valid units specifier (unitstr).', unitstr)
+    end
+end
 
 
 %% Make sure input is a cell array
@@ -55,3 +74,8 @@ wavefreq = NaN(1, nWaves);
 for i = 1:nWaves
     wavefreq(i) = tidesDataBase.(wavecode{i}).freq;
 end
+
+%
+wavefreq = wavefreq .* unitsFactors(unitstr);
+
+
