@@ -1,25 +1,27 @@
 function wavefreq = tidalFreq(wavecode, unitstr)
 % wavefreq = TIDALFREQ(wavecode, unitstr)
 %
-%   inputs:
+%   inputs
 %       - wavecode: string (or cell array) with tidal
 %                   constituent(s) name(s).
 %       - unitstr (optional): string indicating units of the output
 %                             (default is cycles per day).
 %
-%   outputs:
+%   outputs
 %       - wavefreq: frequency (in cycles per day) of the
 %                   tidal constituents requested in the input.
 %
-% TIDALFREQ returns tidal frequencies (in cycles per day). The 
-% function itself contains the definition of the frequency of
-% each constituent (a database obtained from the toolbox t_tide,
-% by Rich Pawlowicz).
+% TIDALFREQ returns tidal frequencies of the constituents specified
+% by "wavecode". By default, the output in cycles per day, but this
+% can be set by the optional input "unitstr".
+%
+% This function has a list of tidal frequencies. These were
+% obtained from the toolbox t_tide, by Rich Pawlowicz.
 %
 % Olavo Badaro Marques, 21/Jul/2017.
 
 
-%%
+%% Check optional input "unitstr" (use default value if not given)
 
 %
 unitsFactors = containers.Map();
