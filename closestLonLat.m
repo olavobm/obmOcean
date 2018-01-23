@@ -55,7 +55,12 @@ indmin = NaN(1, npts);
 %
 for i1 = 1:npts
 
-    [~, indmin_aux] = min(bla(:, :, i1));
-    
+    [~, indmin_aux] = min(reshape(bla(:, :, i1), nr*nc, 1));
+
     indmin(i1) = indmin_aux;
 end
+
+
+%%
+
+
