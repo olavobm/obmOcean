@@ -2,13 +2,14 @@ function indmin = closestLonLat(long, latg, loni, lati)
 % indmin = CLOSESTLONLAT(long, latg, loni, lati)
 %
 %   inputs
-%       -
-%       -
-%       -
-%       -
+%       - long: array of longitude grid.
+%       - latg:   "   "  latitude    ".
+%       - loni: vector of longitude points.
+%       - lati:    "   "  latitude    ".
 %
 %   outputs
-%       -
+%       - indmin: index of (long, latg) of the grid point
+%                 with mininum distance to the points (loni, lati).
 %
 %
 % See also: gsw_distance.m.
