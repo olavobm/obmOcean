@@ -19,8 +19,23 @@ function indmin = closestLonLat(long, latg, loni, lati)
 
 %%
 
-[nr, nc] = size(long);
+lreggrid = (isvector(long) && isvector(latg));
 
+
+%%
+
+if lreggrid
+    
+    nr = length(latg);
+    nc = length(long);
+    
+else
+
+    [nr, nc] = size(long);
+    
+end
+
+%
 npts = length(loni);
 
 
