@@ -2,7 +2,7 @@ function bathyStruct = gridSSbathy(bathyfile)
 % bathyStruct = GRIDSSBATHY(bathyfile)
 %
 %   inputs
-%       - bathyfile: a *.cgi (text file) with Smith-Sandwell
+%       - bathyfile: a *.cgi with Smith-Sandwell
 %                    bathymetry in a Nx3 array.
 %
 %   outputs
@@ -10,9 +10,9 @@ function bathyStruct = gridSSbathy(bathyfile)
 %                      (vectors) and "bathy" (matrix).
 %
 %
-% The .cgi can be obtained at http://topex.ucsd.edu/cgi-bin/get_data.cgi,
-% in which you select the longitude/latitude limits.
-%
+% The .cgi file (which is a text file) can be obtained at
+% http://topex.ucsd.edu/cgi-bin/get_data.cgi, in which you
+% select the longitude/latitude limits.
 %
 % Olavo Badaro Marques, 11/Jan/2018.
 
