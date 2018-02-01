@@ -2,7 +2,7 @@ function indmin = closestLonLat(long, latg, loni, lati)
 % indmin = CLOSESTLONLAT(long, latg, loni, lati)
 %
 %   inputs
-%       - long: array of longitude grid.
+%       - long: array of longitude grid (output of meshgrid!).
 %       - latg:   "   "  latitude    ".
 %       - loni: vector of longitude points.
 %       - lati:    "   "  latitude    ".
