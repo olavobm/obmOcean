@@ -1,4 +1,4 @@
-function indmin = closestLonLat(long, latg, loni, lati)
+function [indmin, distmin] = closestLonLat(long, latg, loni, lati)
 % indmin = CLOSESTLONLAT(long, latg, loni, lati)
 %
 %   inputs
@@ -10,6 +10,8 @@ function indmin = closestLonLat(long, latg, loni, lati)
 %   outputs
 %       - indmin: index of (long, latg) of the grid point
 %                 with mininum distance to the points (loni, lati).
+%       - distmin: distance (in meters) between the closest
+%                  point in git dilong/latg to loni/lati.
 %
 % TO DO:
 %   - allow long and latg to be vectors of a regular array.
@@ -138,6 +140,7 @@ end
 
 %
 indmin = NaN(1, npts);
+distmin = NaN(1, npts);
 
 %
 for i1 = 1:npts
@@ -151,5 +154,8 @@ for i1 = 1:npts
     %
 %     indmin(i1) = ind_nearbypts(indmin_aux);
     indmin(i1) = ind_nearbypts(i_aux, j_aux, i1);
+    
+    %
+    distmin(i1) = distArray(i_aux, j_aux, i1);
 end
 
