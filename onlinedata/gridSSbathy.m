@@ -33,5 +33,9 @@ nlat = rb / (nlon);
 bathyStruct.lon = bathymatrix(1:nlon, 1);
 bathyStruct.lat = bathymatrix(1:nlon:rb, 2);
 
+%
+bathyStruct.lon = bathyStruct.lon';
+
+%
 bathyStruct.bathy = reshape(bathymatrix(:, 3), nlon, nlat);
 bathyStruct.bathy = bathyStruct.bathy';
