@@ -1,16 +1,16 @@
 function [section] = extractSection(x, y, z, pt1, pt2, npts)
-% [xsec, ysec, zsec] = EXTRACTSECTION(x, y, z, pt1, pt2, npts)
+% [section] = EXTRACTSECTION(x, y, z, pt1, pt2, npts)
 %
-%   inputs:
-%       - x:
-%       - y:
-%       - z:
+%   inputs
+%       - x: x coordinate for z.
+%       - y: y coordinate for z.
+%       - z: 2D array of a function of x and y.
 %       - pt1: Nx2 array with coordinates of the beginning of the section.
 %       - pt2: Nx2 array with coordinates of the end of the section.
 %       - npts: number of points between pt1 and pt2 (include
 %               edges) to interpolate z on.
 %
-%   outputs:
+%   outputs
 %       - section: struct variable with 3 fields:
 %               - x:
 %               - y:
