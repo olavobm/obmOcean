@@ -1,22 +1,22 @@
 function tidepred = tidepredictTPXO(time, lon, lat, tidevar, tideconst, tpxomodel)
 % tidepred = TIDEPREDICTTPXO(time, lon, lat, tidevar, tideconst, tpxomodel)
 %
-%   inputs:
+%   inputs
 %       - time: time in datenum format(UTC????)
 %       - lon: longitude.
 %       - lat: latitude.
-%       - tidevar:
+%       - tidevar: variable to obtain a tidal prediction of.
 %       - tideconst (optional): cell array (or one string) with the name
 %                               of the tidal constituents.
 %       - tpxomodel (optional):
 %
-%   outputs:
+%   outputs
 %       - tidepred:
 %
 % TIDEPREDICTTPXO uses the tmd_toolbox (the tmd_tide_pred.m function)
 % to make a tidal prediction using the TPXO model.
 %
-% See also: tmd_tide_pred.m
+% See also: tmd_tide_pred.m and gettidesTPXO.m
 %
 % Olavo Badaro Marques, 12/Jan/2017.
 
