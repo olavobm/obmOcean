@@ -1,20 +1,17 @@
 function distalongtran = distAlongTransect(a, x, lEarth)
-%
 % distalongtran = DISTALONGTRANSECT(a, x, lEarth)
 % 
-%   inputs:
-%       - x: MxN matrix, containing the coordinates of M points
-%            in a N-dimensional space.
-% 
+%   inputs
 %       - a: 2xN matrix. The first (second) row have the coordinates
 %            of the points representing the beginning (end) of the
 %            transect in a N-dimensional space.
-%
+%       - x: MxN matrix, containing the coordinates of M points
+%            in a N-dimensional space.
 %       - lEarth (optional): true or false to indicate whether the other
 %                            inputs refer to lon/lat coordinates on the
 %                            surface of the Earth. Default is true.
 % 
-%   outputs:
+%   outputs
 %       - distalongtran: The (euclidean) distance between the beginning of
 %                        the transect, a(1, :), and the projection of each
 %                        point in x onto the line defined by a(1, :) and
