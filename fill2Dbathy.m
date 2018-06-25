@@ -57,8 +57,12 @@ end
 
 %%
 
-xplt = [x; x(end); x(1)];
+%
+if isrow(x);    x = x(:);    end
+if isrow(z);    z = z(:);    end
 
+%
+xplt = [x; x(end); x(1)];
 zplt = [z; zbound; zbound];
 
 
