@@ -2,9 +2,14 @@ function hfill = fill2Dbathy(x, z, zbound, varargin)
 % hfill = FILL2DBATHY(x, z, zbound, varargin)
 %
 %   inputs
-%       - x:
-%       - z:
-%       - zbound (optional):
+%       - x: x coordinate of bathymetry.
+%       - z: z water depths. By default, z should be positive. But
+%            if you want it negative, just use a negative zbound.
+%       - zbound (optional): A default (deep-ocean) value is used to
+%                            close the polygon of fill. You can change
+%                            this value in this input.
+%       - varargin (optional): any Parameter-Value pair that can set
+%                              the properties of a filled (object?).
 %
 %   outputs
 %       - hfill:
