@@ -120,23 +120,23 @@ trackStruct.lat(inds_fill_ref) = lonlatpts(:, 2);
 %
 for i = 1:Nseg_ref
     
-    %
+    % Calculate distance (in degrees) and azimuth
     [dist_aux, az_aux] = distance(lonlatpts(i, 2), lonlatpts(i, 1), ...
                                   lonlatpts(i+1, 2), lonlatpts(i+1, 1));
                               
-    %
+    % Get evenly spaced distances for this segment
     dists_perseg_aux = linspace(0, dist_aux, npts_perseg(i)+2);
     
-    %
+    % Calculate coordinates of the points in this segment
     [lat_perseg_aux, ...
      lon_perseg_aux] = reckon(lonlatpts(i, 2), lonlatpts(i, 1), ...
                               dists_perseg_aux, az_aux);
-	     
-                          
-	%
-    inds_fill_aux = inds_fill_ref(i)+1:inds_fill_ref(i+1)-1;
+	             
+	% Get indices in the output of the coordinates in the i'th segment 
+    inds_fill_aux = (inds_fill_ref(i) + 1) : (inds_fill_ref(i+1) - 1);
     
-    %
+    % Assign calculated coordinates (without
+    % reference points) to the output
     trackStruct.lon(inds_fill_aux) = lon_perseg_aux(2:end-1);
     trackStruct.lat(inds_fill_aux) = lat_perseg_aux(2:end-1);
     
