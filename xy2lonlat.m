@@ -21,25 +21,44 @@ function [lonpts, latpts] = xy2lonlat(lonlat0, xpts, ypts)
 
 %%
 
-distkm_fromref = sqrt(xpts.^2 + ypts.^2);
-
-
-%%
 %
-% Using this on a sphere is only an approximation,
-% which is only valid at small scales
+londeg_dist = xpts ./ (60 * 1.852 * cosd(lonlat0(2)));
+
 %
-% I can improve on that later, though not really meaningful.
-
-azimuth_fromxy = atan2(ypts, xpts);
+latdeg_dist = ypts ./ (60*1.852);
 
 
 %%
 
-distdegrees_fromref = km2deg(distkm_fromref);
+%
+lonpts = lonlat0(1) + londeg_dist;
+
+%
+latpts = lonlat0(2) + latdeg_dist;
 
 
-%%
-
-[latpts, lonpts] = reckon(lonlat0(2), lonlat0(1), ...
-                          distdegrees_fromref, azimuth_fromxy);
+% % %%
+% % 
+% % distkm_fromref = sqrt(xpts.^2 + ypts.^2);
+% % 
+% % 
+% % %%
+% % %
+% % % Using this on a sphere is only an approximation,
+% % % which is only valid at small scales. It turns out
+% % % this a very bad approximation even at small scales.
+% % %
+% % % I can improve on that later, though not really meaningful.
+% % 
+% % azimuth_fromxy = atan2(ypts, xpts);
+% % 
+% % 
+% % %%
+% % 
+% % distdegrees_fromref = km2deg(distkm_fromref);
+% % 
+% % 
+% % %%
+% % 
+% % [latpts, lonpts] = reckon(lonlat0(2), lonlat0(1), ...
+% %                           distdegrees_fromref, azimuth_fromxy);
