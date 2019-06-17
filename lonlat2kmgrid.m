@@ -2,13 +2,15 @@ function [xpts, ypts] = lonlat2kmgrid(lonlat0, lonpts, latpts)
 % [xpts, ypts] = LONLAT2KMGRID(lonlat0, lonpts, latpts)
 %
 %   inputs
-%       -
-%       -
-%       -
+%       - lonlat0: 1x2 vector with the (longitude, latitude)
+%                  coordinate reference (i.e. the 0 on the
+%                  x/y grid).
+%       - lonpts: array with longitudes of interest.
+%       - latpts: array with latitudes, of the same size as lonpts.
 %
 %   outputs
-%       -
-%       -
+%       - xpts: the x-coordinate of the inputs (relative to lonlat0).
+%       - ypts: the y-coordinate.
 %
 %
 %
@@ -21,7 +23,7 @@ function [xpts, ypts] = lonlat2kmgrid(lonlat0, lonpts, latpts)
 
 %%
 
-[distpts, azymthpts]  = distance(lonlat0(2), lonlat0(1), ...
+[distpts, azymthpts] = distance(lonlat0(2), lonlat0(1), ...
                                  latpts, lonpts);
 
 %
