@@ -2,17 +2,23 @@ function [lonpts, latpts] = xy2lonlat(lonlat0, xpts, ypts)
 % [lonpts, latpts] = XY2LONLAT(lonlat0, xpts, ypts)
 %
 %   inputs
-%       -
-%       -
-%       -
+%       - lonlat0: double array with two numbers -- reference
+%                  longitude and latitude, in that order.
+%       - xpts: array with x coordinates.
+%       - ypts: array, same length as xpts, with y coordinates.
 %
 %   outputs
-%       -
-%       -
+%       - lonpts: longitude array.
+%       - latpts: latitude array.
 %
 %
+% XY2LONLAT.m calculates the longitude and latitude coordinates
+% from cartesian coordinates (x, y), in kilometers, where the
+% origin is associated with the point lonlat0.
 %
-%
+% Naturally, this calculation is only approximate because the
+% Earth is a sphere and the cartesian coordinates lie on a
+% plane.
 %
 % See also: lonlat2kmgrid.m
 %
